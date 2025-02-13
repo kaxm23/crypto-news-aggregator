@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Profile - Crypto News Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Your Profile</h1>
+        <div class="profile-section">
+            <h2>Favorite Cryptocurrencies</h2>
+            <div class="crypto-list">
+                {% for crypto in user.favorite_cryptocurrencies %}
+                <div class="crypto-item">
+                    <span>{{ crypto.crypto_symbol }}</span>
+                    <button class="remove-btn" data-crypto="{{ crypto.crypto_symbol }}">Remove</button>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <h2>Alert Settings</h2>
+            <div class="alert-settings">
+                {% for alert in user.alert_settings %}
+                <div class="alert-item">
+                    <span>{{ alert.crypto_symbol }}</span>
+                    <input type="number" value="{{ alert.sentiment_threshold }}" 
+                           class="threshold-input" step="0.1" min="-1" max="1">
+                    <label>
+                        <input type="checkbox" {% if alert.email_alerts %}checked{% endif %}>
+                        Email Alerts
+                    </label>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
